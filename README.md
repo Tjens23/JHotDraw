@@ -12,3 +12,7 @@
 ## History 
 
 This is a fork of jhotdraw from http://sourceforge.net/projects/jhotdraw.
+
+## Contributors
+
+[Tobias Emad Jensen](https://github.com/tjens23)
