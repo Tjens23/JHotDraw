@@ -37,6 +37,7 @@ import org.jhotdraw.draw.Drawing;
 import org.jhotdraw.draw.DrawingEditor;
 import org.jhotdraw.draw.DrawingView;
 import org.jhotdraw.draw.QuadTreeDrawing;
+import org.jhotdraw.draw.io.ImageFormatRegistry;
 import org.jhotdraw.draw.io.ImageInputFormat;
 import org.jhotdraw.draw.io.ImageOutputFormat;
 import org.jhotdraw.draw.io.InputFormat;
@@ -196,21 +197,23 @@ public class SVGDrawingPanel extends JPanel implements Disposable {
      */
     public Drawing createDrawing() {
         Drawing drawing = new QuadTreeDrawing();
+        
+        // Input formats - using modular registry for image formats
         LinkedList<InputFormat> inputFormats = new LinkedList<InputFormat>();
         inputFormats.add(new SVGZInputFormat());
-        inputFormats.add(new ImageInputFormat(new SVGImageFigure(), "PNG", "Portable Network Graphics (PNG)", "png", "image/png"));
-        inputFormats.add(new ImageInputFormat(new SVGImageFigure(), "JPG", "Joint Photographics Experts Group (JPEG)", "jpg", "image/jpg"));
-        inputFormats.add(new ImageInputFormat(new SVGImageFigure(), "GIF", "Graphics Interchange Format (GIF)", "gif", "image/gif"));
+        // Add all registered image formats (PNG, JPEG, GIF, BMP, etc.)
+        inputFormats.addAll(ImageFormatRegistry.createInputFormats(new SVGImageFigure()));
         inputFormats.add(new TextInputFormat(new SVGTextFigure()));
         drawing.setInputFormats(inputFormats);
+        
+        // Output formats - using modular registry for image formats
         LinkedList<OutputFormat> outputFormats = new LinkedList<OutputFormat>();
         outputFormats.add(new SVGOutputFormat());
         outputFormats.add(new SVGZOutputFormat());
-        outputFormats.add(new ImageOutputFormat());
-        outputFormats.add(new ImageOutputFormat("JPG", "Joint Photographics Experts Group (JPEG)", "jpg", BufferedImage.TYPE_INT_RGB));
-        outputFormats.add(new ImageOutputFormat("BMP", "Windows Bitmap (BMP)", "bmp", BufferedImage.TYPE_BYTE_INDEXED));
+        outputFormats.addAll(ImageFormatRegistry.createOutputFormats());
         outputFormats.add(new ImageMapOutputFormat());
         drawing.setOutputFormats(outputFormats);
+        
         return drawing;
     }
 

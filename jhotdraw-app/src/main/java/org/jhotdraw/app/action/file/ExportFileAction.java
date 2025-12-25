@@ -143,7 +143,7 @@ public class ExportFileAction extends AbstractViewAction {
                                 proposedURI = file.toURI();
                             }
                         } catch (IllegalArgumentException e) {
-                            // allowed empty
+                            System.out.println("ExportFileAction: " + e.getMessage());
                         }
                     }
                     fileChooser.setSelectedURI(proposedURI);

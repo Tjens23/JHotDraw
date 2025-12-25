@@ -15,6 +15,7 @@ import java.lang.reflect.*;
 import java.net.URI;
 import java.util.HashMap;
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
 import org.jhotdraw.action.edit.RedoAction;
 import org.jhotdraw.action.edit.UndoAction;
 import org.jhotdraw.api.app.View;
@@ -23,6 +24,7 @@ import org.jhotdraw.app.AbstractView;
 import org.jhotdraw.draw.Drawing;
 import org.jhotdraw.draw.DrawingEditor;
 import org.jhotdraw.draw.io.InputFormat;
+import org.jhotdraw.draw.io.OutputFormat;
 import org.jhotdraw.draw.print.DrawingPageable;
 import org.jhotdraw.gui.JFileURIChooser;
 import org.jhotdraw.net.URIUtil;
@@ -50,6 +52,13 @@ public class SVGView extends AbstractView {
      */
     private UndoRedoManager undo;
     private PropertyChangeListener propertyHandler;
+    
+    /**
+     * The output format to use when saving. This is set based on the file
+     * extension when opening or exporting a file, ensuring that saves
+     * preserve the original format.
+     */
+    private OutputFormat currentOutputFormat;
 
     /**
      * Creates a new View.
@@ -123,8 +132,62 @@ public class SVGView extends AbstractView {
      * Writes the view to the specified uri.
      */
     @Override
+    @SuppressWarnings("unchecked")
     public void write(URI uri, URIChooser chooser) throws IOException {
-        new SVGOutputFormat().write(new File(uri), svgPanel.getDrawing());
+        OutputFormat outputFormat = null;
+        
+        // First, try to get the format from the chooser (for Export operations)
+        if (chooser instanceof JFileURIChooser) {
+            JFileURIChooser fc = (JFileURIChooser) chooser;
+            FileFilter fileFilter = fc.getFileFilter();
+            HashMap<FileFilter, OutputFormat> map = (HashMap<FileFilter, OutputFormat>) 
+                fc.getClientProperty("ffOutputFormatMap");
+            if (map != null) {
+                outputFormat = map.get(fileFilter);
+            }
+        }
+        
+        // If no format from chooser, use the stored format (for Save operations)
+        if (outputFormat == null) {
+            outputFormat = currentOutputFormat;
+        }
+        
+        // If still no format, determine from file extension
+        if (outputFormat == null) {
+            outputFormat = getOutputFormatForURI(uri);
+        }
+        
+        // Last resort: default to SVG
+        if (outputFormat == null) {
+            outputFormat = new SVGOutputFormat();
+        }
+        
+        // Store the format for future saves
+        currentOutputFormat = outputFormat;
+        
+        outputFormat.write(uri, svgPanel.getDrawing());
+    }
+    
+    /**
+     * Determines the appropriate output format based on the file extension.
+     */
+    private OutputFormat getOutputFormatForURI(URI uri) {
+        String path = uri.getPath().toLowerCase();
+        Drawing drawing = svgPanel.getDrawing();
+        
+        for (OutputFormat format : drawing.getOutputFormats()) {
+            javax.swing.filechooser.FileFilter ff = format.getFileFilter();
+            if (ff instanceof javax.swing.filechooser.FileNameExtensionFilter) {
+                javax.swing.filechooser.FileNameExtensionFilter fnef = 
+                    (javax.swing.filechooser.FileNameExtensionFilter) ff;
+                for (String ext : fnef.getExtensions()) {
+                    if (path.endsWith("." + ext.toLowerCase())) {
+                        return format;
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     /**
@@ -173,6 +236,10 @@ public class SVGView extends AbstractView {
                 ResourceBundleUtil labels = ResourceBundleUtil.getBundle("org.jhotdraw.app.Labels");
                 throw new IOException(labels.getFormatted("file.open.unsupportedFileFormat.message", URIUtil.getName(uri)));
             }
+            
+            // Set the output format based on the file extension so Save preserves format
+            currentOutputFormat = getOutputFormatForURI(uri);
+            
             SwingUtilities.invokeAndWait(new Runnable() {
                 @Override
                 public void run() {
