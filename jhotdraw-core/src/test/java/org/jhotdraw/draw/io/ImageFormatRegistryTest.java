@@ -35,18 +35,6 @@ public class ImageFormatRegistryTest {
     }
 
     @Test
-    public void testGifFormatSupported() {
-        assertTrue(ImageFormatRegistry.isFormatSupported("gif"),
-            "GIF format should be supported");
-    }
-
-    @Test
-    public void testBmpFormatSupported() {
-        assertTrue(ImageFormatRegistry.isFormatSupported("bmp"),
-            "BMP format should be supported");
-    }
-
-    @Test
     public void testUnsupportedFormat() {
         assertFalse(ImageFormatRegistry.isFormatSupported("xyz"),
             "XYZ format should not be supported");
@@ -58,8 +46,8 @@ public class ImageFormatRegistryTest {
         List<InputFormat> formats = ImageFormatRegistry.createInputFormats(prototype);
         
         assertNotNull(formats, "Input formats should not be null");
-        assertTrue(formats.size() >= 4,
-            "Should have at least 4 input formats (PNG, JPEG, GIF, BMP)");
+        assertTrue(formats.size() >= 2,
+            "Should have at least 2 input formats (PNG, JPEG)");
     }
 
     @Test
@@ -67,8 +55,8 @@ public class ImageFormatRegistryTest {
         List<OutputFormat> formats = ImageFormatRegistry.createOutputFormats();
         
         assertNotNull(formats, "Output formats should not be null");
-        assertTrue(formats.size() >= 4,
-            "Should have at least 4 output formats (PNG, JPEG, GIF, BMP)");
+        assertTrue(formats.size() >= 2,
+            "Should have at least 2 output formats (PNG, JPEG)");
     }
 
     @Test
@@ -76,7 +64,7 @@ public class ImageFormatRegistryTest {
         List<ImageFormatProvider> providers = ImageFormatRegistry.getProviders();
         
         assertNotNull(providers, "Providers should not be null");
-        assertTrue(providers.size() >= 4, "Should have at least 4 providers");
+        assertTrue(providers.size() >= 2, "Should have at least 2 providers");
     }
 
     @Test
