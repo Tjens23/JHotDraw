@@ -39,7 +39,7 @@ pkgs.mkShell {
     echo "Commands:"
     echo "  mvn clean compile          - Build the project"
     echo "  mvn test                   - Run tests"
-    echo "  mvn exec:java -pl jhotdraw-samples/jhotdraw-samples-misc"
+    echo "  mvn exec:java "-Dexec.mainClass=org.jhotdraw.samples.svg.Main" jhotdraw-samples/jhotdraw-samples-misc"
     echo "                             - Run SVG sample app"
     echo "=========================================="
   '';
