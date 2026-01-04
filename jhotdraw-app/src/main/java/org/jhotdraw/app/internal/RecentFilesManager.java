@@ -18,8 +18,9 @@ public class RecentFilesManager {
     private static final int MAX_RECENT_FILES_COUNT = 10;
     private final LinkedList<URI> recentURIs = new LinkedList<>();
     private final Preferences preferences;
-
-    public RecentFilesManager(Preferences preferences) {
+    private static final int RECENT_FILE_COUNT = 0;
+    private static final String RECENT_FILES_KEY = "recentFile.";
+    public RecentFilesManager(Preferences preferences) throws URISyntaxException {
         this.preferences = preferences;
         loadRecentFiles();
     }
@@ -27,16 +28,12 @@ public class RecentFilesManager {
     /**
      * Loads recent files from preferences using Template Method pattern.
      */
-    private void loadRecentFiles() {
-        int count = preferences.getInt("recentFileCount", 0);
+    private void loadRecentFiles() throws URISyntaxException {
+        int count = preferences.getInt(String.valueOf(RECENT_FILE_COUNT), 0);
         for (int i = 0; i < count; i++) {
-            String path = preferences.get("recentFile." + i, null);
+            String path = preferences.get(RECENT_FILES_KEY + i, null);
             if (path != null) {
-                try {
                     addRecentURIInternal(new URI(path));
-                } catch (URISyntaxException ex) {
-                    ex.printStackTrace();
-                }
             }
         }
     }
@@ -45,9 +42,9 @@ public class RecentFilesManager {
      * Saves recent files to preferences.
      */
     public void saveRecentFiles() {
-        preferences.putInt("recentFileCount", recentURIs.size());
+        preferences.putInt(String.valueOf(RECENT_FILE_COUNT), recentURIs.size());
         for (int i = 0; i < recentURIs.size(); i++) {
-            preferences.put("recentFile." + i, recentURIs.get(i).toString());
+            preferences.put(RECENT_FILES_KEY + i, recentURIs.get(i).toString());
         }
     }
 
@@ -96,10 +93,10 @@ public class RecentFilesManager {
      */
     public void clearRecentFiles() {
         recentURIs.clear();
-        preferences.putInt("recentFileCount", 0);
+        preferences.putInt(String.valueOf(RECENT_FILE_COUNT), 0);
         // Remove all stored recent file entries
         for (int i = 0; i < MAX_RECENT_FILES_COUNT; i++) {
-            preferences.remove("recentFile." + i);
+            preferences.remove(RECENT_FILES_KEY + i);
         }
     }
 
