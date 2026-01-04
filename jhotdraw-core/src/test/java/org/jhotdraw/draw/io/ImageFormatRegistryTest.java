@@ -8,36 +8,41 @@
 package org.jhotdraw.draw.io;
 
 import org.jhotdraw.draw.figure.ImageFigure;
-import org.testng.annotations.Test;
+import org.junit.Test;
 import java.util.List;
 
-import static org.testng.Assert.*;
+import static org.assertj.core.api.Assertions.*;
 
 /**
- * Tests for the modular ImageFormatRegistry.
+ * Tests for the modular ImageFormatRegistry using JUnit 4 and AssertJ.
  */
 public class ImageFormatRegistryTest {
 
     @Test
     public void testPngFormatSupported() {
-        assertTrue(ImageFormatRegistry.isFormatSupported("png"), 
-            "PNG format should be supported");
-        assertTrue(ImageFormatRegistry.isFormatSupported("PNG"),
-            "PNG format should be supported (uppercase)");
+        assertThat(ImageFormatRegistry.isFormatSupported("png"))
+            .as("PNG format should be supported")
+            .isTrue();
+        assertThat(ImageFormatRegistry.isFormatSupported("PNG"))
+            .as("PNG format should be supported (uppercase)")
+            .isTrue();
     }
 
     @Test
     public void testJpegFormatSupported() {
-        assertTrue(ImageFormatRegistry.isFormatSupported("jpg"),
-            "JPG format should be supported");
-        assertTrue(ImageFormatRegistry.isFormatSupported("jpeg"),
-            "JPEG format should be supported");
+        assertThat(ImageFormatRegistry.isFormatSupported("jpg"))
+            .as("JPG format should be supported")
+            .isTrue();
+        assertThat(ImageFormatRegistry.isFormatSupported("jpeg"))
+            .as("JPEG format should be supported")
+            .isTrue();
     }
 
     @Test
     public void testUnsupportedFormat() {
-        assertFalse(ImageFormatRegistry.isFormatSupported("xyz"),
-            "XYZ format should not be supported");
+        assertThat(ImageFormatRegistry.isFormatSupported("xyz"))
+            .as("XYZ format should not be supported")
+            .isFalse();
     }
 
     @Test
@@ -45,42 +50,52 @@ public class ImageFormatRegistryTest {
         ImageFigure prototype = new ImageFigure();
         List<InputFormat> formats = ImageFormatRegistry.createInputFormats(prototype);
         
-        assertNotNull(formats, "Input formats should not be null");
-        assertTrue(formats.size() >= 2,
-            "Should have at least 2 input formats (PNG, JPEG)");
+        assertThat(formats)
+            .as("Input formats should not be null")
+            .isNotNull();
+        assertThat(formats)
+            .as("Should have at least 2 input formats (PNG, JPEG)")
+            .hasSizeGreaterThanOrEqualTo(2);
     }
 
     @Test
     public void testCreateOutputFormats() {
         List<OutputFormat> formats = ImageFormatRegistry.createOutputFormats();
         
-        assertNotNull(formats, "Output formats should not be null");
-        assertTrue(formats.size() >= 2,
-            "Should have at least 2 output formats (PNG, JPEG)");
+        assertThat(formats)
+            .as("Output formats should not be null")
+            .isNotNull();
+        assertThat(formats)
+            .as("Should have at least 2 output formats (PNG, JPEG)")
+            .hasSizeGreaterThanOrEqualTo(2);
     }
 
     @Test
     public void testProviderCount() {
         List<ImageFormatProvider> providers = ImageFormatRegistry.getProviders();
         
-        assertNotNull(providers, "Providers should not be null");
-        assertTrue(providers.size() >= 2, "Should have at least 2 providers");
+        assertThat(providers)
+            .as("Providers should not be null")
+            .isNotNull();
+        assertThat(providers)
+            .as("Should have at least 2 providers")
+            .hasSizeGreaterThanOrEqualTo(2);
     }
 
     @Test
     public void testPngProvider() {
         PngFormatProvider provider = new PngFormatProvider();
         
-        assertEquals(provider.getFormatName(), "PNG");
-        assertEquals(provider.getFileExtensions(), new String[]{"png"});
-        assertEquals(provider.getMimeTypes(), new String[]{"image/png"});
+        assertThat(provider.getFormatName()).isEqualTo("PNG");
+        assertThat(provider.getFileExtensions()).isEqualTo(new String[]{"png"});
+        assertThat(provider.getMimeTypes()).isEqualTo(new String[]{"image/png"});
     }
 
     @Test
     public void testJpegProvider() {
         JpegFormatProvider provider = new JpegFormatProvider();
         
-        assertEquals(provider.getFormatName(), "JPEG");
-        assertEquals(provider.getFileExtensions(), new String[]{"jpg", "jpeg"});
+        assertThat(provider.getFormatName()).isEqualTo("JPEG");
+        assertThat(provider.getFileExtensions()).isEqualTo(new String[]{"jpg", "jpeg"});
     }
 }
