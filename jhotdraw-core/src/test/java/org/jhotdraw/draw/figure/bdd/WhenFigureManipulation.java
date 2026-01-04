@@ -19,36 +19,31 @@
 package org.jhotdraw.draw.figure.bdd;
 
 import com.tngtech.jgiven.Stage;
-import com.tngtech.jgiven.annotation.ExpectedScenarioState;
-import com.tngtech.jgiven.annotation.ProvidedScenarioState;
+import com.tngtech.jgiven.annotation.ScenarioState;
+import com.tngtech.jgiven.annotation.ScenarioState.Resolution;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import org.jhotdraw.draw.figure.RectangleFigure;
 
-/**
- * JGiven When stage for BDD testing of figure manipulation actions.
- *
- * @author JHotDraw Team
- */
 public class WhenFigureManipulation extends Stage<WhenFigureManipulation> {
 
-    @ExpectedScenarioState
+    @ScenarioState
     protected RectangleFigure rectangle;
 
-    @ExpectedScenarioState
+    @ScenarioState(resolution = Resolution.NAME)
     protected Point2D.Double startPoint;
 
-    @ExpectedScenarioState
+    @ScenarioState(resolution = Resolution.NAME)
     protected Point2D.Double endPoint;
 
-    @ProvidedScenarioState
+    @ScenarioState
     protected Rectangle2D.Double resultingBounds;
 
-    @ProvidedScenarioState
+    @ScenarioState
     protected boolean containmentResult;
 
-    @ProvidedScenarioState
+    @ScenarioState(resolution = Resolution.NAME)
     protected Point2D.Double testPoint;
 
     public WhenFigureManipulation the_user_sets_bounds_from_start_to_end_point() {

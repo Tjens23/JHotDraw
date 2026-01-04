@@ -182,7 +182,7 @@ public class ViewManagerTest {
      */
     @Test
     public void testAddSameViewTwiceDoesNothing() {
-        when(mockView1.getApplication()).thenReturn(mockApplication);
+        when(mockView1.getApplication()).thenReturn(null).thenReturn(mockApplication);
 
         viewManager.add(mockView1);
         viewManager.add(mockView1); // Second add should do nothing

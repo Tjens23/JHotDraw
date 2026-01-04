@@ -19,7 +19,8 @@
 package org.jhotdraw.draw.figure.bdd;
 
 import com.tngtech.jgiven.Stage;
-import com.tngtech.jgiven.annotation.ExpectedScenarioState;
+import com.tngtech.jgiven.annotation.ScenarioState;
+import com.tngtech.jgiven.annotation.ScenarioState.Resolution;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import org.jhotdraw.draw.figure.RectangleFigure;
@@ -27,16 +28,16 @@ import static org.assertj.core.api.Assertions.*;
 
 public class ThenFigureBehavior extends Stage<ThenFigureBehavior> {
 
-    @ExpectedScenarioState
+    @ScenarioState
     protected RectangleFigure rectangle;
 
-    @ExpectedScenarioState
+    @ScenarioState
     protected Rectangle2D.Double resultingBounds;
 
-    @ExpectedScenarioState
+    @ScenarioState
     protected boolean containmentResult;
 
-    @ExpectedScenarioState
+    @ScenarioState(resolution = Resolution.NAME)
     protected Point2D.Double testPoint;
 
     public ThenFigureBehavior the_rectangle_should_have_position(double x, double y) {
