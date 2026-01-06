@@ -32,8 +32,6 @@ import static org.mockito.Mockito.*;
 /**
  * Comprehensive unit tests for RectangleFigure using JUnit 4, AssertJ, and Mockito.
  * Tests focus on geometric operations, boundary conditions, and drawing behavior.
- *
- * @author JHotDraw Team
  */
 public class RectangleFigureTest {
 
