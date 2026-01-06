@@ -21,9 +21,6 @@ import org.jhotdraw.draw.figure.ImageHolderFigure;
  *   <li>Register with {@link ImageFormatRegistry#registerProvider(ImageFormatProvider)}</li>
  *   <li>Or add to META-INF/services/org.jhotdraw.draw.io.ImageFormatProvider for SPI</li>
  * </ol>
- * 
- * @author JHotDraw
- * @version $Id$
  */
 public interface ImageFormatProvider {
     

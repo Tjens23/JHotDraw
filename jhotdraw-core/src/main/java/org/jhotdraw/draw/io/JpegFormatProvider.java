@@ -15,9 +15,6 @@ import java.awt.image.BufferedImage;
  * 
  * <p>JPEG uses lossy compression, making it ideal for photographs
  * and images with smooth color gradients. Supports both .jpg and .jpeg extensions.</p>
- * 
- * @author JHotDraw
- * @version $Id$
  */
 public class JpegFormatProvider implements ImageFormatProvider {
     

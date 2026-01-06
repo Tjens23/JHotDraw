@@ -15,9 +15,6 @@ import java.awt.image.BufferedImage;
  * 
  * <p>PNG supports lossless compression and transparency (alpha channel),
  * making it ideal for graphics with sharp edges or text.</p>
- * 
- * @author JHotDraw
- * @version $Id$
  */
 public class PngFormatProvider implements ImageFormatProvider {
     

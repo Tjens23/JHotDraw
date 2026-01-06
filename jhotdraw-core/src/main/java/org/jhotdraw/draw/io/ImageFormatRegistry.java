@@ -26,9 +26,6 @@ import java.util.ServiceLoader;
  * List&lt;InputFormat&gt; formats = ImageFormatRegistry.getInputFormats(myImageFigure);
  * drawing.getInputFormats().addAll(formats);
  * </pre>
- * 
- * @author JHotDraw
- * @version $Id$
  */
 public final class ImageFormatRegistry {
     
