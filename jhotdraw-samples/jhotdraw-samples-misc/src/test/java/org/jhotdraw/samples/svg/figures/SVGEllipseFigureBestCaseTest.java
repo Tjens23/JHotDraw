@@ -6,7 +6,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 
-public class SVGEllipseFigureTest {
+public class SVGEllipseFigureBestCaseTest {
     @Test
     public void testConstructorAndGetters() {
         SVGEllipseFigure ellipse = new SVGEllipseFigure(10, 20, 30, 40);
