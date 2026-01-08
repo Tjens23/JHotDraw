@@ -29,12 +29,6 @@ import static org.assertj.core.api.Assertions.*;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-/**
- * Unit tests for AbstractFigure using JUnit 4 and AssertJ.
- * Tests focus on core figure behavior, attribute management, and geometric operations.
- *
- * @author tw
- */
 public class AbstractFigureTest {
 
     @Mock
