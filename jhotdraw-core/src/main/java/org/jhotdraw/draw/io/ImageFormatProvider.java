@@ -1,27 +1,7 @@
-/*
- * @(#)ImageFormatProvider.java
- *
- * Copyright (c) 2025 The authors and contributors of JHotDraw.
- * You may not use, copy or modify this file, except in compliance with the
- * accompanying license terms.
- */
 package org.jhotdraw.draw.io;
 
 import org.jhotdraw.draw.figure.ImageHolderFigure;
 
-/**
- * A provider interface for image format support.
- * 
- * <p>Implementations of this interface define how to create input and output
- * formats for specific image types (PNG, JPEG, GIF, etc.).</p>
- * 
- * <p>To add support for a new image format:</p>
- * <ol>
- *   <li>Implement this interface</li>
- *   <li>Register with {@link ImageFormatRegistry#registerProvider(ImageFormatProvider)}</li>
- *   <li>Or add to META-INF/services/org.jhotdraw.draw.io.ImageFormatProvider for SPI</li>
- * </ol>
- */
 public interface ImageFormatProvider {
     
     /**
