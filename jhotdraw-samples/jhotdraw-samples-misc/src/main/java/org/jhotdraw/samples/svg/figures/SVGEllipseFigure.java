@@ -55,7 +55,6 @@ public class SVGEllipseFigure extends SVGAttributedFigure implements SVGFigure {
         setConnectable(false);
     }
 
-    // DRAWING
     @Override
     protected void drawFill(Graphics2D g) {
         if (ellipse.width > 0 && ellipse.height > 0) {
@@ -70,7 +69,6 @@ public class SVGEllipseFigure extends SVGAttributedFigure implements SVGFigure {
         }
     }
 
-    // SHAPE AND BOUNDS
     public double getX() {
         return ellipse.x;
     }
@@ -108,9 +106,6 @@ public class SVGEllipseFigure extends SVGAttributedFigure implements SVGFigure {
         return r;
     }
 
-    /**
-     * Checks if a Point2D.Double is inside the figure.
-     */
     @Override
     public boolean contains(Point2D.Double p) {
         return getHitShape().contains(p);
@@ -228,9 +223,6 @@ public class SVGEllipseFigure extends SVGAttributedFigure implements SVGFigure {
         return handles;
     }
 
-    // CONNECTING
-    // COMPOSITE FIGURES
-    // CLONING
     /**
      * Copy constructor for SVGEllipseFigure.
      */
@@ -241,7 +233,6 @@ public class SVGEllipseFigure extends SVGAttributedFigure implements SVGFigure {
         this.cachedHitShape = null;
     }
 
-    // EVENT HANDLING
     @Override
     public boolean isEmpty() {
         Rectangle2D.Double b = getBounds();
