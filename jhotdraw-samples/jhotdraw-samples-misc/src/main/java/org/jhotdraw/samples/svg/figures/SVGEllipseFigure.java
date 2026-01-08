@@ -231,12 +231,14 @@ public class SVGEllipseFigure extends SVGAttributedFigure implements SVGFigure {
     // CONNECTING
     // COMPOSITE FIGURES
     // CLONING
-    @Override
-    public SVGEllipseFigure clone() {
-        SVGEllipseFigure that = (SVGEllipseFigure) super.clone();
-        that.ellipse = (Ellipse2D.Double) this.ellipse.clone();
-        that.cachedTransformedShape = null;
-        return that;
+    /**
+     * Copy constructor for SVGEllipseFigure.
+     */
+    public SVGEllipseFigure(SVGEllipseFigure that) {
+        super();
+        this.ellipse = (Ellipse2D.Double) that.ellipse.clone();
+        this.cachedTransformedShape = null;
+        this.cachedHitShape = null;
     }
 
     // EVENT HANDLING
